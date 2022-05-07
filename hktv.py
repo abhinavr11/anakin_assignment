@@ -1,7 +1,7 @@
 import requests
 import urllib.parse
 import sys
-
+import json
 
 def scrape():
     zones = ["thirteenlandmarks","supermarket","personalcarenhealth","beautynhealth","homenfamily","housewares","deals","sportsntravel"]
@@ -77,7 +77,9 @@ def scrape():
         sys.stdout.write(f"\rScraping product %i /{lengthp}" % i)
         sys.stdout.flush() 
 
-
+    with open('hktvdata.json', 'w') as outfile:
+        json.dump(products, outfile)
+        outfile.close()
 
 
 if __name__ == "__main__":
