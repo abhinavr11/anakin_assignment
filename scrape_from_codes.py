@@ -6,7 +6,7 @@ import threading
 import datetime
 
 STARTT = datetime.datetime.now()
-
+NTHREADS = 100
 def scrape(lock,urls):
     
   
@@ -68,7 +68,7 @@ if __name__ == "__main__":
     #t2.join()
 
     threads = []
-    for i in range(100):
+    for i in range(NTHREADS):
         if i == 99:
             t = threading.Thread(target=scrape, args=(lock,product_codes[i*4665:-1]))
         else:
