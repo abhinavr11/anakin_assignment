@@ -67,12 +67,18 @@ def scrape():
             all_products_links.append(prd)
             sys.stdout.write(f"\rGenerating Product links %i /{lengthpg}" % i)
             sys.stdout.flush() 
-            
+
+    product_codes = []
+    for cde in all_products_links:
+        product_codes.append(cde['code'])
+
+    product_codes = list(set(product_codes))    
+
     product_base_link = "https://www.hktvmall.com/hktvwebservices/v1/hktv/get_product?product_id="
     products = []
-    lengthp = len(all_products_links)
-    for i,pr_lnk in enumerate(all_products_links):
-        url = product_base_link+pr_lnk['code']+"&lang=en&no_stock_redirect=true&user_id=anonymous"
+    lengthp = len(product_codes)
+    for i,pr_lnk in enumerate(product_codes):
+        url = product_base_link+pr_lnk+"&lang=en&no_stock_redirect=true&user_id=anonymous"
         products.append(requests.get(url,headers = head).json())
         sys.stdout.write(f"\rScraping product %i /{lengthp}" % i)
         sys.stdout.flush() 
