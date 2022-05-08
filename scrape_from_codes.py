@@ -2,13 +2,14 @@ import requests
 import urllib.parse
 import sys
 import json
+import threading
+import datetime
 
-def scrape_using_codes():
-    with open('codes.json') as json_file:
-        product_codes = json.load(json_file)
-        json_file.close()
+STARTT = datetime.datetime.now()
 
+def scrape(lock,urls):
     
+  
     head = {
     "accept-encoding":"gzip",
     "authorization":"Bearer 2de2ea56-4e3c-4401-9a76-c014c70bdc08",
@@ -23,19 +24,46 @@ def scrape_using_codes():
 
     product_base_link = "https://www.hktvmall.com/hktvwebservices/v1/hktv/get_product?product_id="
     products = []
-    lengthp = len(product_codes)
-    for i,pr_lnk in enumerate(product_codes):
+    lengthp = 466532 #len(product_codes)
+    for i,pr_lnk in enumerate(urls):
+        
+        lock.acquire()
+        global counter
+        counter += 1
+        lock.release()
+        
         url = product_base_link+pr_lnk+"&lang=en&no_stock_redirect=true&user_id=anonymous"
         products.append(requests.get(url,headers = head).json())
-        sys.stdout.write(f"\rScraping product %i /{lengthp}" % i)
+        sys.stdout.write(f"\rScraping product %i /{lengthp} Time elapsed {datetime.datetime.now()-STARTT}" % counter)
         sys.stdout.flush() 
         
-        if i%1000 == 0:
+        if counter % 1000 == 0:
+            lock.acquire()
             with open('hktvdata.json', 'w') as outfile:
                     json.dump(products, outfile)
                     outfile.close()
-
+            lock.release()
 
 if __name__ == "__main__":
+    with open('codes.json') as json_file:
+        product_codes = json.load(json_file)
+        json_file.close()
+    
+    lock = threading.Lock()
+    global counter 
+    counter = 0
+    # creating threads
+    t1 = threading.Thread(target=scrape, args=(lock,product_codes[:1000]))
+    t2 = threading.Thread(target=scrape, args=(lock,product_codes[1000:2000]))
+    t3 = threading.Thread(target=scrape, args=(lock,product_codes[2000:3000]))
+    t4 = threading.Thread(target=scrape, args=(lock,product_codes[3000:4000]))
 
-    scrape_using_codes()
+    
+            # start threads
+    t1.start()
+    t2.start()
+
+            # wait until threads finish their job
+    t1.join()
+    t2.join()
+    
