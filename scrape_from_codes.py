@@ -30,9 +30,10 @@ def scrape_using_codes():
         sys.stdout.write(f"\rScraping product %i /{lengthp}" % i)
         sys.stdout.flush() 
         
-    with open('hktvdata.json', 'w') as outfile:
-            json.dump(products, outfile)
-            outfile.close()
+        if i%1000 == 0:
+            with open('hktvdata.json', 'w') as outfile:
+                    json.dump(products, outfile)
+                    outfile.close()
 
 
 if __name__ == "__main__":
