@@ -53,17 +53,28 @@ if __name__ == "__main__":
     global counter 
     counter = 0
     # creating threads
-    t1 = threading.Thread(target=scrape, args=(lock,product_codes[:1000]))
-    t2 = threading.Thread(target=scrape, args=(lock,product_codes[1000:2000]))
-    t3 = threading.Thread(target=scrape, args=(lock,product_codes[2000:3000]))
-    t4 = threading.Thread(target=scrape, args=(lock,product_codes[3000:4000]))
+    #t1 = threading.Thread(target=scrape, args=(lock,product_codes[:1000]))
+    #t2 = threading.Thread(target=scrape, args=(lock,product_codes[1000:2000]))
+    #t3 = threading.Thread(target=scrape, args=(lock,product_codes[2000:3000]))
+    #t4 = threading.Thread(target=scrape, args=(lock,product_codes[3000:4000]))
 
     
             # start threads
-    t1.start()
-    t2.start()
+    #t1.start()
+    #t2.start()
 
             # wait until threads finish their job
-    t1.join()
-    t2.join()
+    #t1.join()
+    #t2.join()
+
+    threads = []
+    for i in range(100):
+        if i == 99:
+            t = threading.Thread(target=scrape, args=(lock,product_codes[i*4665:-1]))
+        else:
+            t = threading.Thread(target=scrape, args=(lock,product_codes[i*4665:(i+1)*4665]))
+        threads.append(t)
     
+    [ t.start() for t in threads ]
+    # wait for the threads to finish
+    [ t.join() for t in threads ]
