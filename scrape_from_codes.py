@@ -6,7 +6,8 @@ import threading
 import datetime
 
 STARTT = datetime.datetime.now()
-NTHREADS = 100
+NTHREADS = 1000
+
 def scrape(lock,urls):
     
   
@@ -33,7 +34,18 @@ def scrape(lock,urls):
         lock.release()
         
         url = product_base_link+pr_lnk+"&lang=en&no_stock_redirect=true&user_id=anonymous"
-        products.append(requests.get(url,headers = head).json())
+        #pr = None
+        try :
+            pr = requests.get(url,headers = head).json()
+        except:
+            lock.acquire()
+            with open('missedProducts.json', 'w') as outfilePr:
+                    json.dump(url, outfilePr)
+                    outfilePr.close()
+            lock.release()
+            continue
+        
+        products.append(pr)
         sys.stdout.write(f"\rScraping product %i /{lengthp} Time elapsed {datetime.datetime.now()-STARTT}" % counter)
         sys.stdout.flush() 
         
@@ -49,30 +61,19 @@ if __name__ == "__main__":
         product_codes = json.load(json_file)
         json_file.close()
     
+    product_codes = list(set(product_codes)) 
+    
     lock = threading.Lock()
     global counter 
     counter = 0
-    # creating threads
-    #t1 = threading.Thread(target=scrape, args=(lock,product_codes[:1000]))
-    #t2 = threading.Thread(target=scrape, args=(lock,product_codes[1000:2000]))
-    #t3 = threading.Thread(target=scrape, args=(lock,product_codes[2000:3000]))
-    #t4 = threading.Thread(target=scrape, args=(lock,product_codes[3000:4000]))
-
     
-            # start threads
-    #t1.start()
-    #t2.start()
-
-            # wait until threads finish their job
-    #t1.join()
-    #t2.join()
 
     threads = []
     for i in range(NTHREADS):
-        if i == 99:
-            t = threading.Thread(target=scrape, args=(lock,product_codes[i*4665:-1]))
+        if i == NTHREADS-1:
+            t = threading.Thread(target=scrape, args=(lock,product_codes[i*466532//NTHREADS:-1]))
         else:
-            t = threading.Thread(target=scrape, args=(lock,product_codes[i*4665:(i+1)*4665]))
+            t = threading.Thread(target=scrape, args=(lock,product_codes[i*466532//NTHREADS:(i+1)*466532//NTHREADS]))
         threads.append(t)
     
     [ t.start() for t in threads ]
