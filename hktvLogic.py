@@ -7,7 +7,7 @@ def scrape():
     zones = ["thirteenlandmarks","supermarket","personalcarenhealth","beautynhealth","homenfamily","housewares","deals","sportsntravel"]
     headers = {
         "accept-encoding":"gzip",
-        "authorization":"Bearer 2de2ea56-4e3c-4401-9a76-c014c70bdc08",
+        "authorization":"Bearer 7f83db17-7cd1-4742-b814-14dd05daed7f",
         "connection":"Keep-Alive",
         "cookie":"LBI=-1941669348; inapp=true; fence=0; JSESSIONID=7666D5240B540824DE19EFA71540EF49",
         "device-type":"android",
@@ -18,7 +18,7 @@ def scrape():
     
     head = {
     "accept-encoding":"gzip",
-    "authorization":"Bearer 2de2ea56-4e3c-4401-9a76-c014c70bdc08",
+    "authorization":"Bearer 7f83db17-7cd1-4742-b814-14dd05daed7f",
     "connection":"Keep-Alive",
     "cookie":"LBI=-1941669348; inapp=true; fence=0; JSESSIONID=0B05C4127AB75E4CFED31284A948BB10",
     "device-type":"android",
