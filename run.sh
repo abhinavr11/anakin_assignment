@@ -1,3 +1,3 @@
 #!/bin/bash
-python savePcodes.py
-python scrape_from_codes.py
+python3 savePcodes.py
+python3 scrape_from_codes.py
