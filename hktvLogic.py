@@ -85,7 +85,7 @@ def scrape():
 
     with open('hktvdata.json', 'w') as outfile:
         json.dump(products, outfile)
-        outfile.close()
+    outfile.close()
 
 
 if __name__ == "__main__":

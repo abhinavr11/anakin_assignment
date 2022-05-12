@@ -59,7 +59,7 @@ def scrape(lock,urls):
 if __name__ == "__main__":
     with open('codes.json') as json_file:
         product_codes = json.load(json_file)
-        json_file.close()
+    json_file.close()
     
     product_codes = list(set(product_codes)) 
     
