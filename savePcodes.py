@@ -78,17 +78,14 @@ def saveCodes(lock,urls):
         multiple_prod_pg = None
         try:
             multiple_prod_pg = requests.get(lnk,headers=headers).json()
-        except:
-            time.sleep(2)
-            try:
-                multiple_prod_pg = requests.get(lnk,headers=headers).json()
-            except: 
+        except: 
                 lock.acquire()
                 with open('missedPages.json', 'w') as outfilePg:
                     json.dump([lnk], outfilePg)
                     outfilePg.close()
                 lock.release()
                 continue
+            
 
 
         lock.acquire()
