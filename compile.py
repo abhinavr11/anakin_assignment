@@ -96,7 +96,7 @@ def compiler(products):
             
         }
 
-    with open('compiledHKTV.json') as fjson:
+    with open('compiledHKTV.json','w') as fjson:
         json.dump(finalJson,fjson)
     fjson.close()
 
@@ -106,5 +106,4 @@ if __name__ == "__main__":
     with open('hktvdata.json') as json_file:
         products = json.load(json_file)
     json_file.close()
-    
     compiler(products)
