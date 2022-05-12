@@ -7,7 +7,7 @@ import datetime
 import time
 
 STARTT = datetime.datetime.now()
-NTHREADS = 200
+NTHREADS = 100
 missedPg = []
 
 
