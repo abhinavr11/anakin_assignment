@@ -6,21 +6,21 @@ import threading
 import datetime
 
 STARTT = datetime.datetime.now()
-NTHREADS = 1000
+NTHREADS = 100
 
 def scrape(lock,urls):
     
   
-    head = {
+    head =  {
     "accept-encoding":"gzip",
-    "authorization":"Bearer 7f83db17-7cd1-4742-b814-14dd05daed7f",
+    "authorization":"Bearer f54b14d1-2cea-47e2-b044-6d246b2d61c0",
     "connection":"Keep-Alive",
-    "cookie":"LBI=-1941669348; inapp=true; fence=0; JSESSIONID=0B05C4127AB75E4CFED31284A948BB10",
+    "cookie":"LBI=-1941669348; inapp=true; fence=0; JSESSIONID=CB71E843B568BCE2091958BBA587F17A",
     "device-type":"android",
     "host":"www.hktvmall.com",
-    "ott-uuid":"e04d5772-cb0f-4356-acd5-96819447eb2d",
+    "ott-uuid":"13542dde-009b-46ab-b3a9-fa1e256ce33b",
     "user-agent":"okhttp/2.2.0"
-    }
+}
 
 
     product_base_link = "https://www.hktvmall.com/hktvwebservices/v1/hktv/get_product?product_id="
