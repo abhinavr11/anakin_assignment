@@ -6,7 +6,7 @@ import threading
 import datetime
 
 STARTT = datetime.datetime.now()
-NTHREADS = 100
+NTHREADS = 200
 
 def scrape(lock,urls):
     
