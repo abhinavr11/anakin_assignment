@@ -50,7 +50,8 @@ def scrape(lock,urls):
         lock.acquire()
         products.append(pr)
         lock.release()
-        sys.stdout.write(f"\rScraping product %i /{lengthp} Time elapsed {datetime.datetime.now()-STARTT}" % counter)
+        sys.stdout.write(f"\rScraping product %i /{lengthp} Time elapsed {datetime.datetime.now()-STARTT} \n" % counter)
+        sys.stdout.write(f"\Size of products[]:{len(products)}")
         sys.stdout.flush() 
         
         if counter % 1000 == 0:
