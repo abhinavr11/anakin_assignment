@@ -7,7 +7,7 @@ import datetime
 import time
 
 STARTT = datetime.datetime.now()
-NTHREADS = 100
+NTHREADS = 50
 missedPg = []
 
 
@@ -106,7 +106,7 @@ def saveCodes(lock,urls):
         product_codes.append(cde['code'])
 
     lock.acquire()
-    with open('codes1.json', 'w') as outfile:
+    with open('codes1.json', 'a') as outfile:
             json.dump(product_codes, outfile)
             outfile.close()
     lock.release()    

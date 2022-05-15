@@ -51,7 +51,7 @@ def scrape(lock,urls):
         
         if counter % 1000 == 0:
             lock.acquire()
-            with open('hktvdata.json', 'w') as outfile:
+            with open('hktvdata.json', 'a') as outfile:
                     json.dump(products, outfile)
                     outfile.close()
             lock.release()
