@@ -6,7 +6,7 @@ import threading
 import datetime
 
 STARTT = datetime.datetime.now()
-NTHREADS = 200
+NTHREADS = 10
 
 
 def scrape(lock,urls):
@@ -50,11 +50,10 @@ def scrape(lock,urls):
         lock.acquire()
         products.append(pr)
         lock.release()
-        sys.stdout.write(f"\rScraping product %i /{lengthp} Time elapsed {datetime.datetime.now()-STARTT} \n" % counter)
-        sys.stdout.write(f"\Size of products[]:{len(products)}")
+        sys.stdout.write(f"\rScraping product %i /{lengthp} Time elapsed {datetime.datetime.now()-STARTT}" % counter)
         sys.stdout.flush() 
         
-        if counter % 1000 == 0:
+        if counter % 10 == 0:
             lock.acquire()
             with open('hktvdata.json', 'a') as outfile:
                     json.dump(products, outfile)

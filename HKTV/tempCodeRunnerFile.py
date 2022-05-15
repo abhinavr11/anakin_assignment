@@ -1,0 +1,1 @@
+pr = requests.get(url,headers = head).json()
