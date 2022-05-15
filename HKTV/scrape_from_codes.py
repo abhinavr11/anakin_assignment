@@ -8,6 +8,7 @@ import datetime
 STARTT = datetime.datetime.now()
 NTHREADS = 200
 
+
 def scrape(lock,urls):
     
   
@@ -24,13 +25,14 @@ def scrape(lock,urls):
 
 
     product_base_link = "https://www.hktvmall.com/hktvwebservices/v1/hktv/get_product?product_id="
-    products = []
+    
     lengthp = 466532 #len(product_codes)
     for i,pr_lnk in enumerate(urls):
         
         lock.acquire()
         global counter
         counter += 1
+        global products
         lock.release()
         
         url = product_base_link+pr_lnk+"&lang=en&no_stock_redirect=true&user_id=anonymous"
@@ -45,7 +47,9 @@ def scrape(lock,urls):
             lock.release()
             continue
         
+        lock.acquire()
         products.append(pr)
+        lock.release()
         sys.stdout.write(f"\rScraping product %i /{lengthp} Time elapsed {datetime.datetime.now()-STARTT}" % counter)
         sys.stdout.flush() 
         
@@ -54,6 +58,7 @@ def scrape(lock,urls):
             with open('hktvdata.json', 'a') as outfile:
                     json.dump(products, outfile)
                     outfile.close()
+            products = []
             lock.release()
 
 if __name__ == "__main__":
@@ -65,6 +70,8 @@ if __name__ == "__main__":
     
     lock = threading.Lock()
     global counter 
+    global products 
+    products = []
     counter = 0
     
 
