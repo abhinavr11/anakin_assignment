@@ -39,7 +39,7 @@ def scrape(lock,urls):
             pr = requests.get(url,headers = head).json()
         except:
             lock.acquire()
-            with open('missedProducts.json', 'w') as outfilePr:
+            with open('missedProducts.json', 'a') as outfilePr:
                     json.dump(url, outfilePr)
                     outfilePr.close()
             lock.release()

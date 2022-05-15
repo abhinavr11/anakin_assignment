@@ -83,7 +83,7 @@ def scrape():
         sys.stdout.write(f"\rScraping product %i /{lengthp}" % i)
         sys.stdout.flush() 
 
-    with open('hktvdata.json', 'w') as outfile:
+    with open('hktvdata.json', 'a') as outfile:
         json.dump(products, outfile)
     outfile.close()
 
